@@ -30,12 +30,14 @@ $akcia = $jeNovy
     <label for="mesto">Mesto</label>
     <input type="text" id="mesto" name="mesto" maxlength="60" value="<?= e($inzerat->mesto) ?>" required>
 
-    <label for="stav">Stav</label>
-    <select id="stav" name="stav">
-        <option value="aktivny" <?= $inzerat->stav === 'aktivny' ? 'selected' : '' ?>>aktívny</option>
-        <option value="predany" <?= $inzerat->stav === 'predany' ? 'selected' : '' ?>>predaný</option>
-    </select>
+    <?php if (!$jeNovy) { ?>
+        <label for="stav">Stav</label>
+        <select id="stav" name="stav">
+            <option value="aktivny" <?= $inzerat->stav === 'aktivny' ? 'selected' : '' ?>>aktívny</option>
+            <option value="ukonceny" <?= $inzerat->stav === 'ukonceny' ? 'selected' : '' ?>>ukončený</option>
+        </select>
+    <?php } ?>
 
     <button type="submit" class="btn btn-primary">Uložiť</button>
-    <a href="<?= $link->url('inzerat.moje') ?>" class="btn">Zrušiť</a>
+    <a href="<?= $link->url('inzerat.zobrazit') ?>" class="btn">Zrušiť</a>
 </form>

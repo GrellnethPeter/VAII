@@ -532,3 +532,37 @@ main {
     color: #b91c1c;
     font-size: 14px;
 }
+
+/* Celá karta inzerátu je odkaz na úpravu */
+.my-item {
+    position: relative;
+}
+
+.my-info h3 a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+.my-info {
+    min-width: 0;
+}
+
+.popis {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 14px;
+    color: #475569;
+}
+
+.my-item:hover {
+    background: #f8fafc;
+}
+
+.my-actions {
+    position: relative;
+    z-index: 1;
+}

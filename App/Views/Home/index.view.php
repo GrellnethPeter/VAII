@@ -19,7 +19,7 @@
         </select>
     </div>
 
-    <a href="#" class="add-btn">+ Pridať inzerát</a>
+    <a href="<?= $link->url('inzerat.pridat') ?>" class="add-btn">+ Pridať inzerát</a>
 </div>
 
 <div class="layout">

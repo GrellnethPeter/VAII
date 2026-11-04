@@ -19,7 +19,7 @@
         <h1>Online bazár</h1>
         <nav>
             <a href="<?= $link->url('home.index') ?>">Domov</a>
-            <a href="<?= $link->url('inzerat.moje') ?>">Moje inzeráty</a>
+            <a href="<?= $link->url('inzerat.zobrazit') ?>">Moje inzeráty</a>
             <a href="#">Správy</a>
             <a href="#">Admin panel</a>
         </nav>

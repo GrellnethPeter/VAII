@@ -13,4 +13,4 @@ CREATE TABLE IF NOT EXISTS inzeraty (
 INSERT INTO inzeraty (nazov, popis, cena, mesto, stav, datum) VALUES
 ('Horský bicykel', 'Málo používaný, 26 palcov.', 150.00, 'Žilina', 'aktivny', NOW()),
 ('Herný notebook', 'Dobrý stav, nová batéria.', 450.00, 'Martin', 'aktivny', NOW()),
-('Kreslo', 'Kožené, drobné škrabance.', 45.00, 'Bratislava', 'predany', NOW());
+('Kreslo', 'Kožené, drobné škrabance.', 45.00, 'Bratislava', 'ukonceny', NOW());

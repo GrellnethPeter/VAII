@@ -35,13 +35,13 @@ Návštevníci môžu inzeráty prehliadať a filtrovať podľa kategórie, loka
 ## Plánované entity
 - **Pouzivatel:** používateľ systému (autentifikácia a role). Atribúty: id, meno, email, heslo (hash), rola. Vzťahy: 1:N inzeráty, 1:N správy.
 - **Kategoria:** kategória inzerátov. Atribúty: id, nazov. Vzťahy: 1:N inzeráty.
-- **Mesto:** lokalita predaja. Atribúty: psc, nazov, kraj, okres. Vzťahy: 1:N inzeráty.
-- **Inzerat:** inzerát. Atribúty: id, nazov, popis, cena, stav, obrazok, datum_vytvorenia, pouzivatel_id, kategoria_id, mesto_psc, mesto_nazov. Vzťahy: N:1 pouzivatel, kategoria, mesto; 1:N správy.
+- **Obec:** lokalita predaja. Atribúty: id, nazov, kraj, okres. Vzťahy: 1:N inzeráty.
+- **Inzerat:** inzerát. Atribúty: id, nazov, popis, cena, stav, obrazok, datum, pouzivatel_id, kategoria_id, obec_id. Vzťahy: N:1 pouzivatel, kategoria, obec; 1:N správy.
 - **Sprava:** správa k inzerátu. Atribúty: id, text, datum, inzerat_id, odosielatel_id. Vzťahy: N:1 inzerat, N:1 pouzivatel (odosielateľ).
 
 ## Vzťahy medzi entitami
 - **Kategoria → Inzerat (1:N):** jedna kategória obsahuje viac inzerátov, inzerát patrí do jednej kategórie.
-- **Mesto → Inzerat (1:N):** jedno mesto môže mať viac inzerátov, inzerát má jedno mesto.
+- **Obec → Inzerat (1:N):** jedna obec môže mať viac inzerátov, inzerát má jednu obec.
 - **Pouzivatel → Inzerat (1:N):** používateľ môže vytvoriť viac inzerátov, každý inzerát má jedného autora.
 - **Inzerat → Sprava (1:N):** k inzerátu sa viaže viac správ.
 - **Pouzivatel → Sprava (1:N):** používateľ môže odoslať viac správ.

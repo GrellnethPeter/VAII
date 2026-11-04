@@ -26,7 +26,6 @@ class InzeratController extends BaseController
     public function pridat(Request $request): Response
     {
         $inzerat = new Inzerat();
-        $inzerat->stav = 'aktívny';
         $chyba = null;
 
         if ($request->isPost()) {
@@ -49,7 +48,7 @@ class InzeratController extends BaseController
         if ($request->isPost()) {
             $chyba = $this->naplnitUlozit($request, $inzerat);
             if ($chyba === null) {
-                return $this->redirect($this->url('inzerat.moje'));
+                return $this->redirect($this->url('inzerat.zobrazit'));
             }
         }
         return $this->html(compact('inzerat', 'chyba'), 'formular');
@@ -61,7 +60,7 @@ class InzeratController extends BaseController
         if ($request->isPost()) {
             $inzerat = Inzerat::getOne($request->post('id'))?->delete();
         }
-        return $this->redirect($this->url('inzerat.moje'));
+        return $this->redirect($this->url('inzerat.zobrazit'));
     }
 
     //naplni model z formulara a ulozi ho do DB, vrati chybu ak sa vyskytne
@@ -73,11 +72,12 @@ class InzeratController extends BaseController
         if (trim((string)$inzerat->nazov) === '' || !is_numeric($inzerat->cena) || $inzerat->cena < 0) {
             return 'Neplatné údaje. Názov nesmie byť prázdny a cena musí byť kladné číslo.';
         }
-        if (!in_array($inzerat->stav, ['aktívny', 'ukončený'], true)) {
-            $inzerat->stav = 'aktívny';
+        if (!in_array($inzerat->stav, ['aktivny', 'ukonceny'], true)) {
+            $inzerat->stav = 'aktivny';
         }
         if ($inzerat->id === null) {
             $inzerat->datum = date('Y-m-d H:i:s');
+            $inzerat->stav = 'aktivny';
         }
         $inzerat->save();
         return null;
