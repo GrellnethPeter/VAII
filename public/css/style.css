@@ -493,3 +493,42 @@ main {
     height: 40px;
 }
 
+/* Formulár inzerátu */
+.form-card {
+    max-width: 520px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.form-card label {
+    display: block;
+    margin: 12px 0 4px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.form-card input,
+.form-card select,
+.form-card textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.form-card .btn {
+    text-align: center;
+    text-decoration: none;
+}
+
+.chyba {
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: #fee2e2;
+    color: #b91c1c;
+    font-size: 14px;
+}
