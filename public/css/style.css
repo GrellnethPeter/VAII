@@ -557,6 +557,18 @@ main {
     font-size: 14px;
     color: #475569;
 }
+/*zalomenie dlheho textu*/
+.my-info h3,
+.popis,
+.meta {
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 560px) {
+    .my-item {
+        grid-template-columns: 90px minmax(0, 1fr);
+    }
+}
 
 .my-item:hover {
     background: #f8fafc;
