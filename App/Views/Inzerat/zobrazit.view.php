@@ -2,6 +2,7 @@
 
 /** @var \Framework\Support\LinkGenerator $link */
 /** @var \App\Models\Inzerat[] $inzeraty */
+/** @var \App\Models\Kategoria[] $kategorie */
 ?>
 <div class="toolbar">
     <h2>Moje inzeráty</h2>
@@ -11,7 +12,8 @@
 <p class="count">Počet inzerátov: <?= count($inzeraty) ?></p>
 
 <div class="my-list">
-    <?php foreach ($inzeraty as $inzerat) {?>
+    <?php foreach ($inzeraty as $inzerat) {
+        $kategoria = $inzerat->getOneRelated(\App\Models\Kategoria::class); ?>
         <article class="my-item">
             <div class="my-img">obrázok inzerátu</div>
             <div class="my-info">
@@ -22,6 +24,7 @@
                     <?=  e($inzerat->mesto) ?> &bull;
                     Pridané: <?=  e(date('d.m.Y', strtotime($inzerat->datum))) ?> &bull;
                     Stav: <?= $inzerat->stav === 'ukonceny' ? 'ukončený' : 'aktívny' ?>
+                    Kategória: <?= e($kategoria?->nazov ?? 'bez kategórie') ?> &bull;
                 </p>
             </div>
             <div class="my-actions">

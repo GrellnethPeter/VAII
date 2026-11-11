@@ -578,3 +578,20 @@ main {
     position: relative;
     z-index: 1;
 }
+
+/* Kategórie */
+.kat-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.filters .btn {
+    text-align: center;
+    text-decoration: none;
+}

@@ -21,7 +21,7 @@
             <a href="<?= $link->url('home.index') ?>">Domov</a>
             <a href="<?= $link->url('inzerat.zobrazit') ?>">Moje inzeráty</a>
             <a href="#">Správy</a>
-            <a href="#">Admin panel</a>
+            <a href="<?= $link->url('kategoria.index') ?>">Admin panel</a>
         </nav>
         <div class="user">Používateľ</div>
     </header>

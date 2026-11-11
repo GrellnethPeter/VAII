@@ -16,4 +16,5 @@ class Inzerat extends Model
     public ?string $mesto = null;
     public ?string $stav = null;
     public ?string $datum = null;
+    public ?int $kategoriaId = null;
 }

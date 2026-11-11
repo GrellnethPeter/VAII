@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Inzerat;
+use App\Models\Kategoria;
 use Framework\Core\BaseController;
 use Framework\Http\HttpException;
 use Framework\Http\Request;
@@ -34,7 +35,8 @@ class InzeratController extends BaseController
                 return $this->redirect($this->url('inzerat.zobrazit'));
             }
         }
-        return $this->html(compact('inzerat', 'chyba'), 'formular');
+        $kategorie = Kategoria::getAll(null, [], 'nazov ASC');
+        return $this->html(compact('inzerat', 'chyba', 'kategorie'), 'formular');
     }
 
     //update
@@ -51,14 +53,15 @@ class InzeratController extends BaseController
                 return $this->redirect($this->url('inzerat.zobrazit'));
             }
         }
-        return $this->html(compact('inzerat', 'chyba'), 'formular');
+        $kategorie = Kategoria::getAll(null, [], 'nazov ASC');
+        return $this->html(compact('inzerat', 'chyba', 'kategorie'), 'formular');
     }
 
     //delete
     public function vymazat(Request $request): Response
     {
         if ($request->isPost()) {
-            $inzerat = Inzerat::getOne($request->post('id'))?->delete();
+            Inzerat::getOne($request->post('id'))?->delete();
         }
         return $this->redirect($this->url('inzerat.zobrazit'));
     }
@@ -67,11 +70,22 @@ class InzeratController extends BaseController
     private function naplnitUlozit(Request $request, Inzerat $inzerat): ?string
     {
         $inzerat->setFromRequest($request);
-        $inzerat->cena = str_replace(',', '.', $inzerat->cena);
+        $inzerat->cena = str_replace(',', '.', (string)$inzerat->cena);
 
-        if (trim((string)$inzerat->nazov) === '' || !is_numeric($inzerat->cena) || $inzerat->cena < 0) {
-            return 'Neplatné údaje. Názov nesmie byť prázdny a cena musí byť kladné číslo.';
+        if (trim((string)$inzerat->nazov) === '') {
+            return 'Názov inzerátu nesmie byť prázdny.';
         }
+        if (!is_numeric($inzerat->cena) || $inzerat->cena < 0.01 || $inzerat->cena > 1000000) {
+            return 'Cena musí byť v rozmedzí 0,01 € až 1 000 000 €.';
+        }
+
+        // prepojenie na kategóriu (1:N), kategória je povinná a vyberá sa zo zoznamu
+        $kategoriaId = $request->post('kategoriaId');
+        if (!is_string($kategoriaId) || !ctype_digit($kategoriaId) || Kategoria::getOne((int)$kategoriaId) === null) {
+            return 'Vyberte platnú kategóriu.';
+        }
+        $inzerat->kategoriaId = (int)$kategoriaId;
+
         if (!in_array($inzerat->stav, ['aktivny', 'ukonceny'], true)) {
             $inzerat->stav = 'aktivny';
         }
@@ -82,6 +96,4 @@ class InzeratController extends BaseController
         $inzerat->save();
         return null;
     }
-
-
 }

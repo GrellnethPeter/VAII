@@ -1,6 +1,9 @@
 <?php
 
 /** @var \Framework\Support\LinkGenerator $link */
+/** @var \App\Models\Kategoria[] $kategorie */
+/** @var \App\Models\Inzerat[] $inzeraty */
+/** @var string|null $kategoriaId */
 ?>
 <div class="toolbar">
     <h2>Inzeráty</h2>
@@ -25,14 +28,16 @@
 <div class="layout">
     <aside class="filters">
         <h3>Filtre</h3>
-        <form>
+        <form method="get" action="<?= $link->url('home.index') ?>">
             <label for="kategoria">Kategória</label>
             <select id="kategoria" name="kategoria">
-                <option>Všetky</option>
-                <option>Elektronika</option>
-                <option>Oblečenie</option>
-                <option>Nábytok</option>
-                <option>Šport</option>
+                <option value="">Všetky</option>
+                <?php foreach ($kategorie as $kategoria) { ?>
+                    <option value="<?= e($kategoria->id) ?>"
+                        <?= (string)$kategoriaId === (string)$kategoria->id ? 'selected' : '' ?>>
+                        <?= e($kategoria->nazov) ?>
+                    </option>
+                <?php } ?>
             </select>
 
             <label for="mesto">Lokalita</label>
@@ -52,68 +57,25 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Použiť filtre</button>
-            <button type="reset" class="btn">Zrušiť filtre</button>
+            <a href="<?= $link->url('home.index') ?>" class="btn">Zrušiť filtre</a>
         </form>
     </aside>
 
     <section class="listing">
-        <p class="count">Nájdených inzerátov: 10</p>
+        <p class="count">Nájdených inzerátov: <?= count($inzeraty) ?></p>
 
         <div class="cards">
-            <article class="card">
-                <div class="card-img">obrázok inzerátu</div>
-                <div class="card-body">
-                    <h3>Názov inzerátu</a></h3> <!-- <a href="<?= $link->url('inzerat.index') ?>"> -->
-                    <p>Popis inzerátu...</p>
-                    <p class="price">100 €</p>
-                    <p class="meta">Žilina</p>
-                </div>
-            </article>
-            <article class="card">
-                <div class="card-img">obrázok inzerátu</div>
-                <div class="card-body">
-                    <h3><a href="<?= $link->url('inzerat.index') ?>">Názov inzerátu</a></h3>
-                    <p>Popis inzerátu...</p>
-                    <p class="price">150 €</p>
-                    <p class="meta">Martin</p>
-                </div>
-            </article>
-            <article class="card">
-                <div class="card-img">obrázok inzerátu</div>
-                <div class="card-body">
-                    <h3><a href="<?= $link->url('inzerat.index') ?>">Názov inzerátu</a></h3>
-                    <p>Popis inzerátu...</p>
-                    <p class="price">200 €</p>
-                    <p class="meta">Bratislava</p>
-                </div>
-            </article>
-            <article class="card">
-                <div class="card-img">obrázok inzerátu</div>
-                <div class="card-body">
-                    <h3><a href="<?= $link->url('inzerat.index') ?>">Názov inzerátu</a></h3>
-                    <p>Popis inzerátu...</p>
-                    <p class="price">250 €</p>
-                    <p class="meta">Košice</p>
-                </div>
-            </article>
-            <article class="card">
-                <div class="card-img">obrázok inzerátu</div>
-                <div class="card-body">
-                    <h3><a href="<?= $link->url('inzerat.index') ?>">Názov inzerátu</a></h3>
-                    <p>Popis inzerátu...</p>
-                    <p class="price">300 €</p>
-                    <p class="meta">Čadca</p>
-                </div>
-            </article>
-            <article class="card">
-                <div class="card-img">obrázok inzerátu</div>
-                <div class="card-body">
-                    <h3><a href="<?= $link->url('inzerat.index') ?>">Názov inzerátu</a></h3>
-                    <p>Popis inzerátu...</p>
-                    <p class="price">350 €</p>
-                    <p class="meta">Žilina</p>
-                </div>
-            </article>
+            <?php foreach ($inzeraty as $inzerat) { ?>
+                <article class="card">
+                    <div class="card-img">obrázok inzerátu</div>
+                    <div class="card-body">
+                        <h3><?= e($inzerat->nazov) ?></h3>
+                        <p class="popis"><?= e($inzerat->popis) ?></p>
+                        <p class="price"><?= e($inzerat->cena) ?> €</p>
+                        <p class="meta"><?= e($inzerat->mesto) ?></p>
+                    </div>
+                </article>
+            <?php } ?>
         </div>
     </section>
 </div>

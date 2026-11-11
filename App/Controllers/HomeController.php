@@ -5,6 +5,8 @@ namespace App\Controllers;
 use Framework\Core\BaseController;
 use Framework\Http\Request;
 use Framework\Http\Responses\Response;
+use App\Models\Inzerat;
+use App\Models\Kategoria;
 
 /**
  * Class HomeController
@@ -38,9 +40,23 @@ class HomeController extends BaseController
      * @return Response The response object containing the rendered HTML for the home page.
      */
     public function index(Request $request): Response
-    {
-        return $this->html();
+{
+    $kategorie = Kategoria::getAll(null, [], 'nazov ASC');
+
+    // filter podľa kategórie (hodnota z GET sa berie len ak je to číslo)
+    $kategoriaId = $request->get('kategoria');
+    $where = null;
+    $params = [];
+    if (is_string($kategoriaId) && ctype_digit($kategoriaId)) {
+        $where = 'kategoriaId = ?';
+        $params = [(int)$kategoriaId];
+    } else {
+        $kategoriaId = null;
     }
+
+    $inzeraty = Inzerat::getAll($where, $params, 'datum DESC');
+    return $this->html(compact('kategorie', 'inzeraty', 'kategoriaId'));
+}
 
     /**
      * Displays the contact page.
